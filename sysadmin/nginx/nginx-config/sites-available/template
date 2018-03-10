@@ -1,0 +1,18 @@
+server {
+    server_name site.com www.site.com;
+    root /var/www/site.com/;
+
+    index index.php index.html;
+
+    include sites-available/common/errors;
+    include sites-available/common/files;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include sites-available/common/php;
+        try_files $uri =404;
+    }
+}

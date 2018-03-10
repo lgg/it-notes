@@ -1,0 +1,13 @@
+#Robots
+location = /robots.txt {
+    root /var/www/default/;
+}
+
+#Favicons
+location = /favicon.ico {
+    root /var/www/default/;
+}
+
+location = /favicon.png {
+    root /var/www/default/;
+}

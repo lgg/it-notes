@@ -1,0 +1,35 @@
+####################################Conf
+server {
+    #
+    listen 13337 ssl;
+    server_name site.com;
+
+    # Enable SSL
+    ssl_certificate /etc/letsencrypt/live/site.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/site.com/privkey.pem;
+
+    error_page 497 https://site.com/;
+
+    root /usr/share/;
+
+    location /db-admin {
+        root /usr/share;
+
+        location ~ \.php$ {
+            include sites-available/common/php;
+            fastcgi_param HTTPS on;
+        }
+
+        # Web auth form
+        auth_basic "Auth"; # you can change text
+        auth_basic_user_file /etc/nginx/pass/.pma; # also you can change path for .htpasswd file
+    }
+
+    location /db-admin/setup {
+        return 444;
+    }
+
+    location / {
+        return 497;
+    }
+}

@@ -1,0 +1,30 @@
+server {
+    server_name site.com www.site.com;
+    root /var/www/site.com/;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args; # permalinks
+    }
+
+    include sites-available/common/common-hidden;
+
+    location ~* /(?:uploads|files)/.*\.php$ {
+        deny all;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php?$args;
+        include sites-available/common/php;
+    }
+
+    #protect wp-login
+    location = /wp-login.php {
+        try_files $uri =404;
+        include sites-available/common/php;
+
+        # Web auth form
+        auth_basic "Auth"; # you can change text
+        auth_basic_user_file /var/www/site.com/.htpasswd; # also you can change path for .htpasswd file
+    }
+}

@@ -1,0 +1,37 @@
+server {
+    # 80 port
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+
+    # any unhandled server_name
+    server_name _;
+
+    # drop connection
+    return 444;
+}
+
+server {
+    # 443 port
+    listen 443 default_server;
+
+    # self-signed certificates (needed because SSL-handshake is done first)
+    ssl_certificate /etc/nginx/ssl/nginx.crt;
+    ssl_certificate_key /etc/nginx/ssl/nginx.key;
+
+    # drop connection
+    return 444;
+}
+
+# PMA section
+# uncoment this if phpmyadmin is serving on different port(not 80 and not 443)
+#server {
+    ## CHANGE PORT ON YOURS BELOW port
+#    listen 13337 default_server;
+
+    ## self-signed certificates (needed because SSL-handshake is done first)
+#    ssl_certificate /etc/nginx/ssl/nginx.crt;
+#    ssl_certificate_key /etc/nginx/ssl/nginx.key;
+
+    ## drop connection
+#    return 444;
+#}

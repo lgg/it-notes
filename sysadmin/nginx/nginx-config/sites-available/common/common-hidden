@@ -1,0 +1,10 @@
+charset utf8;
+
+# for letsencrypt
+location ~ ^/.well-known {
+    allow all;
+}
+
+location ~ /\. {
+    deny all; # deny .hidden files
+}
