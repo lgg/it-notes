@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Magic Gate</title>
+    <script src="cookie.min.js"></script>
+    <script>
+        //helper functions
+        function ge(id) {
+            return document.getElementById(id);
+        }
+
+        function trigger(el, eventName, handler) {
+            if (el.addEventListener) {
+                el.addEventListener(eventName, handler);
+            } else {
+                el.attachEvent('on' + eventName, function () {
+                    handler.call(el);
+                });
+            }
+        }
+
+        //magic cookie name
+        var magicCookieName = 'unicorn';
+        var magicCookieValue = 'love';
+        var magicWillExpireIn = 60; //days
+
+        document.addEventListener('DOMContentLoaded', function () {
+            //bind set cookie
+            trigger(ge('set'), 'click', function () {
+                if (magicWillExpireIn) {
+                    cookie.set(magicCookieName, magicCookieValue, {
+                        expires: magicWillExpireIn,
+                        path: "/"
+                    });
+                } else {
+                    cookie.set(magicCookieName, magicCookieValue);
+                }
+            });
+
+            //bind delete cookie
+            trigger(ge('delete'), 'click', function () {
+                cookie.removeSpecific(magicCookieName, {
+                    path: "/"
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<input type="submit" id="set" value="set magic">
+<input type="submit" id="delete" value="delete magic">
+</body>
+</html>

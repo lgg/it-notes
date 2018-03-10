@@ -1,0 +1,12 @@
+location /magic-gates {
+    add_header Set-Cookie "unicorn=love;Max-Age=5184000"; #"unicorn=love;Domain=yoursite.com;Path=/;Max-Age=5184000"
+    return 301 /i-want-to-hide-this-path last;
+}
+
+location /i-want-to-hide-this-path {
+    if ($cookie_unicorn != "love") {
+        return 404;
+    }
+
+    # other config of this location goes here
+}

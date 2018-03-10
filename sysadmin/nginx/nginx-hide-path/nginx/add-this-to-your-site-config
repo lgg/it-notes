@@ -1,0 +1,9 @@
+location /magic-gates {
+    root /var/www/yoursite.com/magic/;
+}
+
+location /i-want-to-hide-this-path {
+    if ($cookie_unicorn != "love") {
+        return 404;
+    }
+}
