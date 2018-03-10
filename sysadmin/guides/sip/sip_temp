@@ -1,0 +1,84 @@
+# install
+
+# DNS
+http://web.mit.edu/sip/sip.edu/dns.shtml
+
+# install
+https://www.kamailio.org/wiki/install/4.4.x/git#create_mysql_database
+https://www.kamailio.org/wiki/install/stable/debian
+https://sonnguyen.ws/install-kamailio-debianubuntu/
+
+# NAT
+https://richardskingdom.net/howto-kamailio-sip-proxy-nat-debian-wheezy
+
+## important:
+The script will add two users in MySQL:
+- kamailio - (with default password 'kamailiorw') - user which has full access rights to 'kamailio' database
+- kamailioro - (with default password 'kamailioro') - user which has read-only access rights to 'kamailio' database
+Do change the passwords for these two users to something different that the default values that come with sources.
+
+### increase max password length
+change database structure:
+    subscriber
+    uid_credentials
+
+and increase password to varchar(64)
+
+### don't store plain passwords in DB
+kamctlrc
+    set STORE_PLAINTEXT_PW=0
+
+
+kamailio.cfg
+    set
+        modparam("auth_db", "calculate_ha1", 0)
+
+    so columns ha1(hash from user:realm:pass) and ha1b(hash from user@realm:realm:pass) will be used for auth check
+        default columns for this:
+            modparam("auth_db", "password_column", "ha1")
+            modparam("auth_db", "password_column_2", "ha1b")
+
+more info: http://www.kamailio.org/docs/modules/4.4.x/modules/auth_db.html
+
+
+### logging
+set
+    debug=4
+    log_stderror=no
+
+comment
+    #!ifdef WITH_DEBUG
+    debug=4
+    log_stderror=yes
+    #!else
+    debug=2
+    log_stderror=no
+    #!endif
+
+add to syslog/rsyslog config for kamailio
+    https://www.kamailio.org/dokuwiki/doku.php/tutorials:debug-syslog-messages
+reload syslog/rsyslog
+
+
+# TLS
+http://kamailio.org/docs/modules/4.4.x/modules/tls.html#tls.quick_start
+https://www.kamailio.org/dokuwiki/doku.php/tls:create-certificates
+https://www.kamailio.org/wiki/tutorials/tls/testing-and-debugging
+
+ALSO CHECK THIS IF YOU HAVE TROUBLES WITH TLS: https://github.com/kamailio/kamailio/issues/770
+
+
+
+# log configs
+https://www.kamailio.org/wiki/tutorials/3.2.x/syslog
+
+# view users
+- connected to server
+    kamctl ul show
+
+- all
+    kamctl db show subscriber
+
+### Troubleshooting
+http://serverfault.com/questions/703018/kamailio-cannot-connect-to-remote-mysql-server
+https://richardskingdom.net/howto-kamailio-sip-proxy-nat-debian-wheezy
