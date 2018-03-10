@@ -5,7 +5,7 @@ Some useful notes, code snippets, tips for IT, system administration and every d
 ## Content
 
 * [Common tips for using IT](./common-tips/)
-* [Data recovery]()
+* [Data recovery](./data-recovery/)
 * [System Administration](./sysadmin/)
     * [nginx tips](./sysadmin/nginx/)
         * [nginx config snippets](./sysadmin/nginx/nginx-config/)
