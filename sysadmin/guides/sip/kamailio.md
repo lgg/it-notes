@@ -142,6 +142,31 @@ Where <IP-address> is the external IP address of your host.
 
 Either way should work. Don’t do both, obviously, or you’ll just have the same problem in reverse!
 
+## Configure passwords / AUTH
+
+Change 
+```
+# ----- auth_db params -----
+#!ifdef WITH_AUTH
+modparam("auth_db", "db_url", DBURL)
+modparam("auth_db", "calculate_ha1", yes)
+modparam("auth_db", "password_column", "password")
+modparam("auth_db", "load_credentials", "")
+modparam("auth_db", "use_domain", MULTIDOMAIN)
+```
+to
+```
+# ----- auth_db params -----
+#!ifdef WITH_AUTH
+modparam("auth_db", "db_url", DBURL)
+modparam("auth_db", "calculate_ha1", 0)
+#modparam("auth_db", "password_column", "password")
+#modparam("auth_db", "password_column", "ha1")
+modparam("auth_db", "load_credentials", "")
+modparam("auth_db", "use_domain", MULTIDOMAIN)
+
+```
+
 ## Configure TLS
 
 //TODO ADD
