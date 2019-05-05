@@ -30,6 +30,14 @@ Recommended: 1gb ram VPS
 * check that mysql is running: `netstat -lntup | grep mysql`
     * you should get: `tcp 0 0 127.0.0.1:3306 0.0.0.0:* LISTEN 20434/mysqld`
 
+## Add latest kamailio source
+
+* `vi /etc/apt/sources.list`
+* `wget -O- http://deb.kamailio.org/kamailiodebkey.gpg | sudo apt-key add -`
+* add latest version from: http://deb.kamailio.org/
+* check current installed ver: `kamctl version`
+* use wiki to upgrade to latest ver http://www.kamailio.org/wiki/start
+
 ## Edit kamailio config
 
 ### Edit kamctl
@@ -143,6 +151,8 @@ Where <IP-address> is the external IP address of your host.
 Either way should work. Don’t do both, obviously, or you’ll just have the same problem in reverse!
 
 ## Configure passwords / AUTH
+
+Related trouble: can't auth after add new user at fresh install
 
 Change 
 ```
