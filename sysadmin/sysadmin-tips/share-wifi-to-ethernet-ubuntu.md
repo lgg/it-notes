@@ -32,6 +32,11 @@
     * `sudo route del -net 0.0.0.0 gw 10.0.0.1 netmask 0.0.0.0 dev eth0`
     * `sudo route add default gw 10.0.0.11`
     
+### Reconnection
+
+* `sudo ifconfig enx00e04c36131b 10.0.0.11 netmask 255.255.255.0 up && sudo systemctl restart isc-dhcp-server && sudo systemctl status isc-dhcp-server`
+* replug SLAVE device
+    
 ### Usefull links
 
 * https://serverfault.com/questions/181094/how-do-i-delete-a-route-from-linux-routing-table
